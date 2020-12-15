@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Каталог</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<div class="container">
+    <h3>Скрыть из списка по цене</h3>
+<form method="get" th:action="@{'/products'}">
+    <label>
+        <input class="form-control" th:value="${param.min_price != null ? param.min_price : ''}" type="number" placeholder="Цена от" name="min_price"/>
+    </label>
+    <label>
+        <input class="form-control" th:value="${param.max_price != null ? param.max_price : ''}" type="number" placeholder="Цена до не включительно" name="max_price"/>
+    </label>
+    <button class="btn btn-primary" type="submit">Скрыть</button> <a th:href="@{'products/'}">Показать</a>
+</form>
+</div>
+<div class="container">
+    <h1>Список товаров</h1>
+    <table class="table table-hover">
+        <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Название товара</th>
+            <th>Стоимость</th>
+            <th>Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="p : ${products}">
+            <td th:text="${p.id}"></td>
+            <td th:text="${p.name}"></td>
+            <td th:text="${p.price}"></td>
+            <td>
+                <a class="btn btn-danger" th:href="@{'/products/remove/' + ${p.id}}">Удалить</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
